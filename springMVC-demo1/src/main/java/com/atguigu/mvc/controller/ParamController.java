@@ -1,9 +1,14 @@
 package com.atguigu.mvc.controller;
 
+import bean.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.HttpRequestHandler;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 
@@ -30,8 +35,19 @@ public class ParamController {
     }
 
     @RequestMapping("/testAPI")
-    public String testApiCase(String username, String password,String[] hobby) {
-        System.out.println("username:" + username +" "+"password:" + password+"\n"+"hobby:"+ Arrays.toString(hobby));
+    public String testApiCase(@RequestParam(value = "user_name",required = false,defaultValue = "admin") String username,
+                              String password,
+                              String[] hobby,
+                              @RequestHeader("Host") String Host) {
+        System.out.println("username:" + username + " " + "password:" + password + "\n" + "hobby:" + Arrays.toString(hobby));
+        System.out.println("HOST:"+ Host);
+//        System.out.println("JSESSIONID"+JSESSIONID);
+        return "success";
+    }
+
+    @RequestMapping("/testBean")
+    public String testbean(User user){
+        System.out.println(user);
         return "success";
     }
 }
